@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="ja">
+
+  <head>
+     <script type="text/x-mathjax-config">
+
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+
+    </script>
+
+    <script type="text/javascript" async 
+
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+
+    </script>
+
+  </head>
+
+<body>
+    <h3>多変数最小二乗法(Least Squre Method)</h3>
+計測値\(y_1(k),y_2(k)\)に対する最小二乗推定値\(\hat y_1(k),\hat y_2(k)\)を次式で与えます。
+\begin{align}
+\left\{
+\begin{array}{@{\,}cc}
+\hat y_1(k)&=a_{11}(n)x_1(k)+a_{12}(n)x_2(k)\\
+\hat y_2(k)&=a_{21}(n)x_1(k)+a_{22}(n)x_2(k)
+\end{array}
+\right.
+\end{align}
+
+行列とベクトルで表記すると次式となります。
+\begin{align}
+\mathbf{A}(n)=\left[
+\begin{array}{@{\,}cc}
+a_{11}(n)&a_{12}(n)\\
+a_{21}(n)&a_{22}(n)
+\end{array}
+\right]
+,~~
+\mathbf{x}(n)=\left[
+\begin{array}{@{\,}l}
+x_{1}(n)\\
+x_{2}(n)
+\end{array}
+\right]
+,~~
+\hat{\mathbf{y}}(n)=\left[
+\begin{array}{@{\,}l}
+\hat y_{1}(n)\\
+\hat y_{2}(n)
+\end{array}
+\right]
+,~~
+\mathbf{y}(n)=\left[
+\begin{array}{@{\,}l}
+y_{1}(n)\\
+y_{2}(n)
+\end{array}
+\right]
+\end{align}
+
+\(\mathbf{x}(n)\)に対する\(\mathbf{y}(n)\)の推定値を次式で与えます。
+\begin{align}
+\hat{\mathbf{y}}(k)=\mathbf{A}(n)\mathbf{x}(k)~~~~(k=0,1,\cdots n)\label{eq:RtnEqn}
+\end{align}
+
+\(\mathbf{A}(n)\)を決定するための評価式を次式で与えます。
+\begin{align}
+S(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)\}^T\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)\}\nonumber\\
+&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{x}(k)^T\mathbf{A}(n)^T\mathbf{A}(n)\mathbf{x}(k)+2\mathbf{y}(k)^T\mathbf{A}(n)\mathbf{x}(k)+\mathbf{y}(k)^T\mathbf{y}(k)\}\label{eq:MulEvmEqn}
+\end{align}
+ここに、\(0 < \lambda < 1\)です。
+\(\mathbf{S}(n)\)の極値条件は次式で与えられます。
+\begin{align}
+\frac{\partial S(n)}{\partial {\bf A}}=\left[
+\begin{array}{@{\,}cc}
+\displaystyle\frac{\partial S(n)}{\partial a_{11}(n)}&\displaystyle\frac{\partial S(n)}{\partial a_{12}(n)}\\
+&\\
+\displaystyle\frac{\partial S(n)}{\partial a_{21}(n)}&\displaystyle\frac{\partial S(n)}{\partial a_{22}(n)}
+\end{array}
+\right]
+=
+\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{A}(n)\mathbf{x}(k)\mathbf{x}(k)^T-\mathbf{y}(k)\mathbf{x}(k)^T\}
+=
+\mathbf{O}\label{eq:ParDerEqn}
+\end{align}
+
+式\eqref{eq:RtnEqn}を代入して次式を得ます。
+\begin{align}
+\mathbf{A}(n)\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T=\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T
+\end{align}
+
+\begin{align}
+\mathbf{A}(n)=\mathbf{Q}(n)\mathbf{P}(n)^{-1}\label{eq:SolOfMatA}
+\end{align}
+
+ここに、
+\begin{align}
+\mathbf{P}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T,\\
+\mathbf{Q}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T.
+\end{align}
+
+\(\mathbf{P}(n)\)、\(\mathbf{Q}(n)\)には次式の漸化式が成立します。
+\begin{align}
+\mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\label{eq:MatP}\\
+\mathbf{Q}(n)&=~\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\label{eq:MatQ}
+\end{align}
+
+式\eqref{eq:SolOfMatA}に式\eqref{eq:MatP}と\eqref{eq:MatQ}を代入して丁寧に書き下すと次式が得られます。
+\begin{align}
+\mathbf{A}(n)&=~\{\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\}\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
+&=~\{\lambda\mathbf{Q}(n-1)\mathbf{P}(n-1)^{-1}+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}\{\lambda\mathbf{I}+\mathbf{P}(n-1)^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
+&=~\{\lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}^{-1}\nonumber
+\end{align}
+
+ここで、
+\begin{align}
+\lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}=&~\lambda\mathbf{A}(n-1)+\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}-\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\nonumber\\
+=&~\mathbf{A}(n-1)\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\nonumber
+\end{align}
+
+であることに注意すると、
+\begin{align}
+\mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}^{-1}\nonumber\\
+&=~\mathbf{A}(n-1)+\{\mathbf{y}(k)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
+&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\nonumber
+\end{align}
+
+結局、次式を得ます。
+\begin{align}
+\mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\label{eq:IdtMatA}\\
+\mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\nonumber\\
+\mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\nonumber
+\end{align}
+
+ここで、逆行列の補助定理：
+\begin{align}
+(\mathbf{A}+\mathbf{b}\mathbf{c}^T)^{-1}=\mathbf{A}^{-1}-\frac{\mathbf{A}^{-1}\mathbf{b}\mathbf{c}^T\mathbf{A}^{-1}}{1+\mathbf{c}^T\mathbf{A}^{-1}\mathbf{b}}
+\end{align}
+を用いると、
+\begin{align}
+\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}=\{\lambda\mathbf{P}(n-1)\}^{-1}-\frac{\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}}{1+\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)}
+\end{align}
+となるので、
+\begin{align}
+\mathbf{P}(n)^{-1}=\{\lambda\mathbf{P}(n-1)\}^{-1}-\frac{\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}}{1+\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)}
+\end{align}
+となります。逆行列\(\mathbf{P}(0)^{-1}\)を計算しておけば、\(\mathbf{P}(n)^{-1}\)を逐次計算することができます。さらに、
+\begin{align}
+\mathbf{R}(n)=\mathbf{P}(n)^{-1}
+\end{align}
+とおけば、
+\begin{align}
+\mathbf{R}(n)=\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)^{-1}}{\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)}
+\end{align}
+となります。結局、多変数の逐次最小二乗法は次式となります。
+\begin{align}
+\mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\nonumber\\
+\mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\nonumber\\
+\mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)\nonumber\\
+\mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)\nonumber
+\end{align}
+
+式\eqref{eq:IdtMatA}は2変数に限定されません。すなわち、m個の変数とn個の計測値に適用することができます。
+
+</body>
+
+</html>
