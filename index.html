@@ -111,7 +111,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \end{align}
 
 <p>式\eqref{eq:SolOfMatA}に式\eqref{eq:MatP}と\eqref{eq:MatQ}を代入して書き下すと次式が得られます。
-第1式では2番目の{\(~\)}から\(\mathbf{P}(n-1)^{-1}\)を分離して1番目の{}に組み込みます。
+第1式では2番目の{\(~\)}から\(\mathbf{P}(n-1)^{-1}\)を分離して1番目の{\(~\)}に組み込みます。
 第2式では式\eqref{eq:SolOfMatA}(\(\mathbf{Q}(n)\mathbf{P}(n)^{-1}=\mathbf{A}(n)\))を利用します。</p>
 \begin{align}
 \mathbf{A}(n)&=~\{\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\}\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
@@ -119,7 +119,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 &=~\{\lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}^{-1}\label{eq:Mat_A2}
 \end{align}
 
-<p>ここで、式\eqref{eq:Mat_A2}の1番目の{}について、</p>
+<p>ここで、式\eqref{eq:Mat_A2}の1番目の{\(~\)}について、</p>
 \begin{align}
 \lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}=&~\lambda\mathbf{A}(n-1)+\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}-\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\nonumber\\
 =&~\mathbf{A}(n-1)\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\label{eq:Mat_A3}
