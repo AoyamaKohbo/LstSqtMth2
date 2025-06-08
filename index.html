@@ -92,6 +92,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{A}(n)\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T=\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T
 \end{align}
 
+<p>最小二乗法により\(\mathbf{A}(n)\)は次式(正規方程式)で計算できます。</p>
 \begin{align}
 \mathbf{A}(n)=\mathbf{Q}(n)\mathbf{P}(n)^{-1}\label{eq:SolOfMatA}
 \end{align}
@@ -101,7 +102,6 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{P}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T,\label{eq:mat_P}\\
 \mathbf{Q}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T.\label{eq:mat_Q}
 \end{align}
-<p>式\eqref{eq:SolOfMatA}は正規方程式と呼ばれます。</p>
 
 <p>ここから逐次最小二乗法を導きます。
 \(\mathbf{P}(n)\)、\(\mathbf{Q}(n)\)には次式の漸化式が成立します。</p>
@@ -168,7 +168,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)\nonumber
 \end{align}
 
-<p>式\eqref{eq:IdtMatA}は2変数に限定されません。すなわち、m個の変数とn個の計測値に適用することができます。</p>
+<p>式\eqref{eq:IdtMatA}は2変数に限定されません。すなわち、m個の変数\(\{x_1,\cdots,x_m\}\)とn個の計測値\(\{y_1,\cdots,y_n\}\)に適用できます。</p>
 
 <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
