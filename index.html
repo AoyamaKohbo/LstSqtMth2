@@ -19,11 +19,11 @@
 
 <body>
   <h3>多変数逐次最小二乗法(Realtime Least Squre Method)</h3>
-  \(M\)次ベクトル\(\mathbf{x}(n)=[x_1(n)~x_2(n)~\cdots~x_M(n)]^T\)、\(N\)次ベクトル\(\mathbf{y}(n)=[y_1(n)~y_2(n)~\cdots~y_N(n)]^T\)の関係式を一次式で表現します。
+  \(M\)次ベクトル\(\mathbf{x}(n)=[x_1(n)~x_2(n)~\cdots~x_N(n)]^T\)、\(N\)次ベクトル\(\mathbf{y}(n)=[y_1(n)~y_2(n)~\cdots~y_M(n)]^T\)の関係式を一次式で表現します。
   \begin{align}
     \mathbf{y}(n)=\mathbf{A}(n)\mathbf{x}(n)\label{eq:RtnEqn0}
   \end{align}
-  <p>ここに、\(\mathbf{A}(n)\)は\(N\)行\(M\)列の係数行列です。</p>
+  <p>ここに、\(\mathbf{A}(n)\)は\(M\)行\(N\)列の係数行列です。</p>
   <p>逐次最小二乗法によって式\eqref{eq:RtnEqn0}の係数行列\(\mathbf{A}(n)\)は次式で求まります。</p>
     \begin{align}
     \left.
