@@ -18,18 +18,33 @@
   </head>
 
 <body>
-    <h3>多変数最小二乗法(Least Squre Method)</h3>
-<p>計測値\(y_1(k),y_2(k)\)に対する最小二乗推定値\(\hat y_1(k),\hat y_2(k)\)を次式で与えます。</p>
+  <h3>多変数逐次最小二乗法(Realtime Least Squre Method)</h3>
+  \(M\)次ベクトル\(\mathbf{x}(n)=[x_1(n)~x_2(n)~\cdots~x_M(n)]^T\)、\(N\)次ベクトル\(\mathbf{y}(n)=[y_1(n)~y_2(n)~\cdots~y_N(n)]^T\)の関係式を一次式で表現します。
+  \begin{align}
+    \mathbf{y}(n)=\mathbf{A}(n)\mathbf{x}(n)\label{eq:RtnEqn0}
+  \end{align}
+  <p>ここに、\(\mathbf{A}(n)\)は\(M\)行\(N\)列の係数行列です。</p>
+  <p>逐次最小二乗法によって式\eqref{eq:RtnEqn0}の係数行列\(\mathbf{A}(n)\)は次式で求まります。</p>
+    \begin{align}
+    \left.
+    \begin{array}{@{\,}rl}
+      \mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\\
+      \mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\\
+      \mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)\\
+      \mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)
+    \end{array}
+    \right\} \label{eq:RtLstMtd}
+  \end{align}
+<p>ここに、\(\lambda\)(\(0 < \lambda \leq 1\))は忘却定数と呼ばれます。</p>
+
+<h3>導出</h3>
+<p>多変数逐次最小二乗法の導出を\(M=2\)、\(N=2\)の場合について記述します。
+  計測値\(y_1(n),y_2(n)\)に対する\(x_1(n),x_2(n)\)１次近似式を次式で与えます。</p>
 \begin{align}
-\left\{
-\begin{array}{@{\,}cc}
-\hat y_1(k)&=a_{11}(n)x_1(k)+a_{12}(n)x_2(k)\\
-\hat y_2(k)&=a_{21}(n)x_1(k)+a_{22}(n)x_2(k)
-\end{array}
-\right.
+\hat{\mathbf{y}}(k)=\mathbf{A}(n)\mathbf{x}(k)~~~~(k=0,1,\cdots n)\label{eq:RtnEqn}
 \end{align}
 
-<p>行列とベクトルで表記すると次式となります。</p>
+<p>ここに、行列\(\mathbf{A}(n)\)とベクトル\(\mathbf{x}(n)\)、\(\mathbf{y}(n)\)は次式となります。</p>
 \begin{align}
 \mathbf{A}(n)=\left[
 \begin{array}{@{\,}cc}
@@ -45,33 +60,21 @@ x_{2}(n)
 \end{array}
 \right]
 ,~~
-\hat{\mathbf{y}}(n)=\left[
-\begin{array}{@{\,}l}
-\hat y_{1}(n)\\
-\hat y_{2}(n)
-\end{array}
-\right]
-,~~
 \mathbf{y}(n)=\left[
 \begin{array}{@{\,}l}
 y_{1}(n)\\
 y_{2}(n)
 \end{array}
-\right]
+\right]. \label{eq:MatVec}
 \end{align}
 
-<p>\(\mathbf{x}(n)\)に対する\(\mathbf{y}(n)\)の推定値を次式で与えます。</p>
-\begin{align}
-\hat{\mathbf{y}}(k)=\mathbf{A}(n)\mathbf{x}(k)~~~~(k=0,1,\cdots n)\label{eq:RtnEqn}
-\end{align}
-
-<p>\(\mathbf{A}(n)\)を決定するための評価式を次式で与えます。</p>
+<p>係数行列\(\mathbf{A}(n)\)を決定するための最小二乗評価式を次式で与えます。</p>
 \begin{align}
 J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)\}^T\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)\}
 =~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{A}(n)\mathbf{x}(k)-\mathbf{y}(k)\}^T\{\mathbf{A}(n)\mathbf{x}(k)-\mathbf{y}(k)\}\nonumber\\
 &=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{x}(k)^T\mathbf{A}(n)^T\mathbf{A}(n)\mathbf{x}(k)+2\mathbf{y}(k)^T\mathbf{A}(n)\mathbf{x}(k)+\mathbf{y}(k)^T\mathbf{y}(k)\}\label{eq:MulEvmEqn}
 \end{align}
-<p>ここに、\(0 < \lambda < 1\)です。
+<p>ここに、\(0 < \lambda \leq 1\)です。
 \(J(n)\)の極値条件は次式で与えられます。</p>
 \begin{align}
 \frac{\partial J(n)}{\partial {\bf A}}=\left[
@@ -87,12 +90,12 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{O}\label{eq:ParDerEqn}
 \end{align}
 
-<p>式\eqref{eq:RtnEqn}を代入して次式を得ます。</p>
+<p>式\eqref{eq:ParDerEqn}は次式となります。</p>
 \begin{align}
-\mathbf{A}(n)\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T=\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T
+\mathbf{A}(n)\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T=\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T \label{eq:ParDerEqn2}
 \end{align}
 
-<p>最小二乗法により\(\mathbf{A}(n)\)は次式(正規方程式)で計算できます。</p>
+<p>式\eqref{eq:ParDerEqn2}により\(\mathbf{A}(n)\)は次式(正規方程式)で計算できます。</p>
 \begin{align}
 \mathbf{A}(n)=\mathbf{Q}(n)\mathbf{P}(n)^{-1}\label{eq:SolOfMatA}
 \end{align}
@@ -136,8 +139,8 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 <p>結局、次式を得ます。</p>
 \begin{align}
 \mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\label{eq:IdtMatA}\\
-\mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\nonumber\\
-\mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\nonumber
+\mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\label{eq:MatK}\\
+\mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T
 \end{align}
 
 <p>ここで、逆行列の補助定理：</p>
@@ -152,22 +155,29 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 <p>となります。
   逆行列\(\mathbf{P}(0)^{-1}\)を計算しておけば、式\eqref{eq:Pmat_Inv}により\(\mathbf{P}(n)^{-1}\)を逐次計算できます。さらに、</p>
 \begin{align}
-\mathbf{R}(n)=\mathbf{P}(n)^{-1}
+\mathbf{P}(n)^{-1}=\mathbf{R}(n)\label{eq:PmatInv}
 \end{align}
-<p>とおけば、</p>
+<p>とおけば、式\eqref{eq:Pmat_Inv}は次式となります。</p>
 \begin{align}
-\mathbf{R}(n)=\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)^{-1}}{\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)}
+\mathbf{R}(n)=\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)}{\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)}\label{eq:MatR}
 \end{align}
-<p>となります。結局、多変数の逐次最小二乗法は次式となります。</p>
+<p>となります。したがって、式\eqref{eq:IdtMatA}より</p>
+\begin{align*}
+\mathbf{A}(n)=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n),\nonumber\\
+\end{align*}
+
+<p>式\eqref{eq:MatK}と\eqref{eq:PmatInv}より</p>
+\begin{align*}
+\mathbf{K}(n)=\mathbf{x}(n)^T\mathbf{R}(n),\nonumber\\
+\end{align*}
+
+<p>式\eqref{eq:MatR}より</p>
 \begin{align}
-\mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n)\nonumber\\
-\mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{R}(n)\nonumber\\
-\mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)\nonumber\\
+\mathbf{R}(n)&=~\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{1}{\mu}\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1),\nonumber\\
 \mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)\nonumber
 \end{align}
 
-<p>式\eqref{eq:IdtMatA}は2変数に限定されません。すなわち、m個の変数\(\{x_1,\cdots,x_m\}\)とn個の計測値\(\{y_1,\cdots,y_n\}\)に適用できます。</p>
-
+<p>となり、式\eqref{eq:RtLstMtd}が導出されました。</p>
 <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
 
