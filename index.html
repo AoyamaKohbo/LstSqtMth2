@@ -39,7 +39,7 @@
 
 <h3>導出</h3>
 <p>多変数逐次最小二乗法の導出を\(M=2\)、\(N=2\)の場合について記述します。
-  計測値\(y_1(n),y_2(n)\)に対する\(\hat y_1(n),\hat y_2(n)\)の１次式を次式で与えます。</p>
+  計測値\(y_1(n),y_2(n)\)の近似値\(\hat y_1(n),\hat y_2(n)\)の１次式を次式で与えます。</p>
 \begin{align}
 \hat{\mathbf{y}}(k)=\mathbf{A}(n)\mathbf{x}(k)~~~~(k=0,1,\cdots n)\label{eq:RtnEqn}
 \end{align}
@@ -60,10 +60,10 @@ x_{2}(n)
 \end{array}
 \right]
 ,~~
-\mathbf{y}(n)=\left[
+\hat{\mathbf{y}}(n)=\left[
 \begin{array}{@{\,}l}
-y_{1}(n)\\
-y_{2}(n)
+\hat y_{1}(n)\\
+\hat y_{2}(n)
 \end{array}
 \right]. \label{eq:MatVec}
 \end{align}
@@ -74,8 +74,8 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 =~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{A}(n)\mathbf{x}(k)-\mathbf{y}(k)\}^T\{\mathbf{A}(n)\mathbf{x}(k)-\mathbf{y}(k)\}\nonumber\\
 &=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\mathbf{x}(k)^T\mathbf{A}(n)^T\mathbf{A}(n)\mathbf{x}(k)+2\mathbf{y}(k)^T\mathbf{A}(n)\mathbf{x}(k)+\mathbf{y}(k)^T\mathbf{y}(k)\}\label{eq:MulEvmEqn}
 \end{align}
-<p>ここに、\(0 < \lambda \leq 1\)です。
-\(J(n)\)の極値条件は次式で与えられます。</p>
+<p>ここに、\(0 < \lambda \leq 1\)です。</p>
+<p>近似誤差\(\hat{\mathbf{y}}(k)-\mathbf{y}(k)\)を最小化するための\(J(n)\)の極値条件(\(\partial J(n)/\partial {\bf A}=\mathbf{O}\))は次式で与えられます。</p>
 \begin{align}
 \frac{\partial J(n)}{\partial {\bf A}}=\left[
 \begin{array}{@{\,}cc}
@@ -107,7 +107,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \end{align}
 <p>式\eqref{eq:SolOfMatA}、\eqref{eq:mat_P}、\eqref{eq:mat_Q}は正規方程式とよばれます。</p>
 <p>ここから逐次最小二乗法を導きます。
-\(\mathbf{P}(n)\)、\(\mathbf{Q}(n)\)には次式の漸化式が成立します。</p>
+式\eqref{eq:mat_P}、\eqref{eq:mat_Q}から漸化式が得られます。</p>
 \begin{align}
 \mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\label{eq:MatP}\\
 \mathbf{Q}(n)&=~\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\label{eq:MatQ}
@@ -152,12 +152,12 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \begin{align}
 (\mathbf{A}+\mathbf{b}\mathbf{c}^T)^{-1}=\mathbf{A}^{-1}-\frac{\mathbf{A}^{-1}\mathbf{b}\mathbf{c}^T\mathbf{A}^{-1}}{1+\mathbf{c}^T\mathbf{A}^{-1}\mathbf{b}}
 \end{align}
-<p>を用いると、</p>
+<p>を用いると、\(\mathbf{P}(n)^{-1}\)は次式になります。</p>
 \begin{align}
 \mathbf{P}(n)^{-1}&=~\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
 &=~\{\lambda\mathbf{P}(n-1)\}^{-1}-\frac{\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}}{1+\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)}\label{eq:Pmat_Inv}
 \end{align}
-<p>となります。さらに、</p>
+<p>さらに、</p>
 \begin{align}
 \mathbf{P}(n)^{-1}=\mathbf{R}(n)\label{eq:PmatInv}
 \end{align}
@@ -181,7 +181,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mu&=~\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)\nonumber
 \end{align}
 
-<p>となり、式\eqref{eq:RtLstMtd}が導出されました。</p>
+<p>となり、逐次最小二乗法\eqref{eq:RtLstMtd}が導出されました。</p>
 <p><a href="https://aoyamakohbo.github.io/Craftlogy/">->TOP</a></p>
 </body>
 
