@@ -19,7 +19,7 @@
 
 <body>
   <h3>多変数逐次最小二乗法(Realtime Least Squre Method)</h3>
-  \(M\)次ベクトル\(\mathbf{x}(n)=[x_1(n)~x_2(n)~\cdots~x_N(n)]^T\)、\(N\)次ベクトル\(\mathbf{y}(n)=[y_1(n)~y_2(n)~\cdots~y_M(n)]^T\)の関係式を一次式で表現します。
+  \(N\)次ベクトル\(\mathbf{x}(n)=[x_1(n)~x_2(n)~\cdots~x_N(n)]^T\)と\(M\)次ベクトル\(\mathbf{y}(n)=[y_1(n)~y_2(n)~\cdots~y_M(n)]^T\)の関係式を一次式で表現します。
   \begin{align}
     \mathbf{y}(n)=\mathbf{A}(n)\mathbf{x}(n)\label{eq:RtnEqn0}
   \end{align}
@@ -39,7 +39,7 @@
 
 <h3>導出</h3>
 <p>多変数逐次最小二乗法の導出を\(M=2\)、\(N=2\)の場合について記述します。
-  計測値\(y_1(n),y_2(n)\)に対する\(x_1(n),x_2(n)\)１次近似式を次式で与えます。</p>
+  計測値\(y_1(n),y_2(n)\)に対する\(\hat y_1(n),\hat y_2(n)\)の１次式を次式で与えます。</p>
 \begin{align}
 \hat{\mathbf{y}}(k)=\mathbf{A}(n)\mathbf{x}(k)~~~~(k=0,1,\cdots n)\label{eq:RtnEqn}
 \end{align}
@@ -95,7 +95,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{A}(n)\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T=\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T \label{eq:ParDerEqn2}
 \end{align}
 
-<p>式\eqref{eq:ParDerEqn2}により\(\mathbf{A}(n)\)は次式(正規方程式)で計算できます。</p>
+<p>式\eqref{eq:ParDerEqn2}により\(\mathbf{A}(n)\)は次式で計算できます。</p>
 \begin{align}
 \mathbf{A}(n)=\mathbf{Q}(n)\mathbf{P}(n)^{-1}\label{eq:SolOfMatA}
 \end{align}
@@ -105,7 +105,7 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{P}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{x}(k)\mathbf{x}(k)^T,\label{eq:mat_P}\\
 \mathbf{Q}(n)&=~\sum_{k=0}^{n}\lambda^{n-k}\mathbf{y}(k)\mathbf{x}(k)^T.\label{eq:mat_Q}
 \end{align}
-
+<p>式\eqref{eq:SolOfMatA}、\eqref{eq:mat_P}、\eqref{eq:mat_Q}は正規方程式とよばれます。</p>
 <p>ここから逐次最小二乗法を導きます。
 \(\mathbf{P}(n)\)、\(\mathbf{Q}(n)\)には次式の漸化式が成立します。</p>
 \begin{align}
@@ -113,28 +113,31 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{Q}(n)&=~\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\label{eq:MatQ}
 \end{align}
 
-<p>式\eqref{eq:SolOfMatA}に式\eqref{eq:MatP}と\eqref{eq:MatQ}を代入して書き下すと次式が得られます。
-第1式では2番目の{\(~\)}から\(\mathbf{P}(n-1)^{-1}\)を分離して1番目の{\(~\)}に組み込みます。
-第2式では式\eqref{eq:SolOfMatA}(\(\mathbf{Q}(n)\mathbf{P}(n)^{-1}=\mathbf{A}(n)\))を利用します。</p>
+<p>式\eqref{eq:SolOfMatA}に式\eqref{eq:MatP}と\eqref{eq:MatQ}を代入して書き下すと次式が得られます。</p>
+
 \begin{align}
 \mathbf{A}(n)&=~\{\lambda\mathbf{Q}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\}\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
 &=~\{\lambda\mathbf{Q}(n-1)\mathbf{P}(n-1)^{-1}+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}\{\lambda\mathbf{I}+\mathbf{P}(n-1)^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
 &=~\{\lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}^{-1}\label{eq:Mat_A2}
 \end{align}
+<p>式\eqref{eq:Mat_A2}では、まず、右辺第1式の2番目の{\(~\)}から\(\mathbf{P}(n-1)^{-1}\)を分離して1番目の{\(~\)}に組み込むと第２式になります。</p>
+<p>次に、第2式の1番目の{\(~\)}に\(\mathbf{Q}(n-1)\mathbf{P}(n-1)^{-1}=\mathbf{A}(n-1)\)を利用して第３式になります。</p>
 
-<p>ここで、式\eqref{eq:Mat_A2}の1番目の{\(~\)}について、</p>
+<p>ここで、式\eqref{eq:Mat_A2}の右辺第3式の1番目の{\(~\)}について、</p>
 \begin{align}
 \lambda\mathbf{A}(n-1)+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}=&~\lambda\mathbf{A}(n-1)+\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}+\mathbf{y}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}-\mathbf{A}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\nonumber\\
 =&~\mathbf{A}(n-1)\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\label{eq:Mat_A3}
 \end{align}
 
-<p>となり、
-  式\eqref{eq:Mat_A2}の2番目の{\(~\)}\(^{-1}\)と式\eqref{eq:Mat_A3}の第1項の{\(~\)}が相殺することに注意すると、</p>
+<p>となり、式\eqref{eq:Mat_A3}を式\eqref{eq:Mat_A2}の右辺第3式の1番目の{\(~\)}に代入して、
+  式\eqref{eq:Mat_A2}の2番目の{\(~\)}\(^{-1}\)と式\eqref{eq:Mat_A3}の第1項の{\(~\)}が相殺することに注意して変形を続けます。</p>
 \begin{align}
 \mathbf{A}(n)&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\{\lambda\mathbf{I}+\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{P}(n-1)^{-1}\}^{-1}\nonumber\\
 &=~\mathbf{A}(n-1)+\{\mathbf{y}(k)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
-&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\nonumber
+&=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\label{eq:Mat_A4}
 \end{align}
+<p>式\eqref{eq:Mat_A4}では、まず、右辺第1式の第2項にある\(\mathbf{P}(n-1)^{-1}\)を2番目の{\(~\)}に組み込むと第２式になります。</p>
+<p>次に、第2式の2番目の{\(~\)}に式\eqref{eq:MatP}を利用して第３式になります。</p>
 
 <p>結局、次式を得ます。</p>
 \begin{align}
@@ -142,8 +145,10 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{K}(n)&=~\mathbf{x}(n)^T\mathbf{P}(n)^{-1}\label{eq:MatK}\\
 \mathbf{P}(n)&=~\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T
 \end{align}
-
-<p>ここで、逆行列の補助定理：</p>
+<p>これで、式\eqref{eq:SolOfMatA}を逐次形式に変形できました。</p>
+<p>しかし、式の\eqref{eq:MatK}の\(\mathbf{P}(n)^{-1}\)が気になります。
+  逆行列計算は逐次計算にはまどろっこしいからです。</p>
+<p>そこで、逆行列の補助定理：</p>
 \begin{align}
 (\mathbf{A}+\mathbf{b}\mathbf{c}^T)^{-1}=\mathbf{A}^{-1}-\frac{\mathbf{A}^{-1}\mathbf{b}\mathbf{c}^T\mathbf{A}^{-1}}{1+\mathbf{c}^T\mathbf{A}^{-1}\mathbf{b}}
 \end{align}
@@ -152,16 +157,15 @@ J(n)&=~\frac{1}{2}\sum_{k=0}^{n}\lambda^{n-k}\{\hat{\mathbf{y}}(k)-\mathbf{y}(k)
 \mathbf{P}(n)^{-1}&=~\{\lambda\mathbf{P}(n-1)+\mathbf{x}(n)\mathbf{x}(n)^T\}^{-1}\nonumber\\
 &=~\{\lambda\mathbf{P}(n-1)\}^{-1}-\frac{\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}}{1+\mathbf{x}(n)^T\{\lambda\mathbf{P}(n-1)\}^{-1}\mathbf{x}(n)}\label{eq:Pmat_Inv}
 \end{align}
-<p>となります。
-  逆行列\(\mathbf{P}(0)^{-1}\)を計算しておけば、式\eqref{eq:Pmat_Inv}により\(\mathbf{P}(n)^{-1}\)を逐次計算できます。さらに、</p>
+<p>となります。さらに、</p>
 \begin{align}
 \mathbf{P}(n)^{-1}=\mathbf{R}(n)\label{eq:PmatInv}
 \end{align}
-<p>とおけば、式\eqref{eq:Pmat_Inv}は次式となります。</p>
+<p>とおけば、式\eqref{eq:Pmat_Inv}は次式となり、逆行列計算の必要がなくなります。</p>
 \begin{align}
 \mathbf{R}(n)=\frac{1}{\lambda}\mathbf{R}(n-1)-\frac{\mathbf{R}(n-1)\mathbf{x}(n)\mathbf{x}(n)^T\mathbf{R}(n-1)}{\lambda+\mathbf{x}(n)^T\mathbf{R}(n-1)\mathbf{x}(n)}\label{eq:MatR}
 \end{align}
-<p>となります。したがって、式\eqref{eq:IdtMatA}より</p>
+<p>したがって、式\eqref{eq:IdtMatA}より</p>
 \begin{align*}
 \mathbf{A}(n)=~\mathbf{A}(n-1)+\{\mathbf{y}(n)-\mathbf{A}(n-1)\mathbf{x}(n)\}\mathbf{K}(n),\nonumber\\
 \end{align*}
